@@ -28,7 +28,7 @@ jobs:
         with:
           branch: gh-pages # The branch the action should deploy to.
           folder: dist      # The folder that contains your built project.
-          token: ${{ secrets.ACCESS_TOKEN }} # Use GitHub's built-in token.
+          token: ${{ secrets.GITHUB_TOKEN }} # Use GitHub's built-in token.
           clean: true         # Automatically remove deleted files from the deployment branch
           force: true        # Force the push even if the local history is behind the remote
 
