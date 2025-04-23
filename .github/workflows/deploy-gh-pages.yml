@@ -1,0 +1,37 @@
+name: Deploy to GitHub Pages with Bun
+
+on:
+  push:
+    branches:
+      - main  # Or your default branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest # You can specify a version like "1.0.0"
+
+      - name: Install Dependencies
+        run: bun install
+
+      - name: Build Project
+        run: bun run build
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages # The branch the action should deploy to.
+          folder: dist      # The folder that contains your built project.
+          token: ${{ secrets.ACCESS_TOKEN }} # Use GitHub's built-in token.
+          clean: true         # Automatically remove deleted files from the deployment branch
+          force: true        # Force the push even if the local history is behind the remote
+
+        # Optional: Customize deploy-action
+        #  - commit-message: "Deploy to GitHub Pages" # Custom commit message
+        #  - repository-name: "your-username/your-repo"  # Specific repository if different from the current one.
