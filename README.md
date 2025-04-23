@@ -1,39 +1,39 @@
-# always-on-screen
+# vite-project
 
-一款网页端看板应用，适合屏幕常亮显示
+This template should help get you started developing with Vue 3 in Vite.
 
-![preview](./docs/preview1.png)
+## Recommended IDE Setup
 
-![preview](./docs/preview2.png)
+[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
 
-![preview](./docs/preview3.png)
+## Type Support for `.vue` Imports in TS
 
-![preview](./docs/preview4.png)
+TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
 
-## 特性
+## Customize configuration
 
-- 模拟时钟
-- 数字时钟
-- 横向文字跑马灯
-- 黑白主题
-- Bing壁纸背景
-- 背景自定义
-- 自定义 data.json
+See [Vite Configuration Reference](https://vite.dev/config/).
 
-## Project setup
-```
-yarn install
+## Project Setup
+
+```sh
+pnpm install
 ```
 
-### Compiles and hot-reloads for development
-```
-yarn serve
+### Compile and Hot-Reload for Development
+
+```sh
+pnpm dev
 ```
 
-### Compiles and minifies for production
-```
-yarn build
+### Type-Check, Compile and Minify for Production
+
+```sh
+pnpm build
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### Lint with [ESLint](https://eslint.org/)
+
+```sh
+pnpm lint
+```
