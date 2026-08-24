@@ -1,12 +1,18 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
+import { appRoutes } from '@/router/index'
 </script>
 
 <template>
   <header>
     <div class="wrapper">
-      <RouterLink class="link-item" to="/analog-clock">Analog Clock</RouterLink>
-      <RouterLink class="link-item" to="/digital-clock">Digital Clock</RouterLink>
+      <RouterLink
+        v-for="item in appRoutes"
+        :key="item.name"
+        class="link-item"
+        :to="{ name: item.name }"
+        >{{ item.meta?.title || item.name }}</RouterLink
+      >
     </div>
   </header>
 </template>

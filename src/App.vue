@@ -1,19 +1,60 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-import { useFullscreen } from '@vueuse/core'
-import { isDarkMode } from '@/stores/states.ts'
+import { useFullscreen, useWakeLock } from '@vueuse/core'
+import { computed, onMounted, ref } from 'vue'
+import { themeMode, themeState } from '@/stores/states.ts'
+import { useCursorHider } from '@/hooks/use-cursor-hider.ts'
 
 const { toggle: toggleFullscreen } = useFullscreen()
+
+const { isSupported, isActive, request, release } = useWakeLock()
+
+const floatBarHidden = ref(false)
+const mainWrapper = ref<HTMLElement | null>(null)
+
+onMounted(() => {
+  if (isSupported.value) request('screen')
+})
+const toggleWakeLock = () => {
+  if (isActive.value) release()
+  else request('screen')
+}
+
+useCursorHider('.float-bar', ({ isShow }) => {
+  floatBarHidden.value = !isShow
+  if (mainWrapper.value) {
+    mainWrapper.value.style.cursor = isShow ? '' : 'none'
+  }
+})
+
+const themes = ['auto', 'light', 'dark'] as const
+const themeEmoji = computed(() => {
+  switch (themeMode.value) {
+    case 'dark':
+      return '🌙'
+    case 'light':
+      return '☀️'
+    default:
+      return '🌓'
+  }
+})
+const cycleTheme = () => {
+  const i = themes.indexOf(themeMode.value)
+  themeMode.value = themes[(i + 1) % themes.length]
+}
 </script>
 
 <template>
-  <div class="main-wrapper" :class="{ dark: isDarkMode }">
+  <div ref="mainWrapper" class="main-wrapper" :class="{ dark: themeState === 'dark' }">
     <RouterView />
-    <div class="float-bar">
-      <RouterLink class="link-item" to="/">⌂</RouterLink>
+    <div class="float-bar" :class="{ hidden: floatBarHidden }">
+      <RouterLink class="link-item" to="/">🏠</RouterLink>
 
-      <button title="Switch light/dark mode" @click="isDarkMode = !isDarkMode">☯</button>
-      <button title="Fullscreen" @click="toggleFullscreen">☢</button>
+      <button :title="`Theme: ${themeMode}`" @click="cycleTheme">{{ themeEmoji }}</button>
+      <button :title="isActive ? 'Wake lock active' : 'Wake lock off'" @click="toggleWakeLock">
+        {{ isActive ? '⚡' : '💤' }}
+      </button>
+      <button title="Fullscreen" @click="toggleFullscreen">⛶</button>
     </div>
   </div>
 </template>
@@ -50,6 +91,13 @@ body {
   display: flex;
   gap: 16px;
   align-items: center;
+  opacity: 1;
+  transition: opacity 0.3s;
+
+  &.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
 
   a,
   button {
@@ -59,12 +107,13 @@ body {
     font-size: 20px;
     color: inherit;
     cursor: pointer;
-    opacity: 0.4;
+    opacity: 0.6;
     text-decoration: none;
     padding: 0;
     line-height: 1;
 
-    &:active {
+    &:active,
+    &:hover {
       opacity: 1;
     }
   }

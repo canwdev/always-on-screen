@@ -1,3 +1,7 @@
-import { useStorage } from '@vueuse/core'
+import { useColorMode } from '@vueuse/core'
 
-export const isDarkMode = useStorage('isDarkMode', false)
+const { store, system, state } = useColorMode({ attribute: 'theme' })
+
+export const themeMode = store
+export const themeSystem = system
+export const themeState = state

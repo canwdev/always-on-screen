@@ -1,5 +1,5 @@
 <template>
-  <div class="apple-clock-wrapper" :class="{ 'light-theme': !isDarkMode }">
+  <div class="apple-clock-wrapper" :class="{ 'light-theme': themeState === 'light' }">
     <!--
  Recreating Apple Watch's Utility face <http://www.apple.com/watch/design/> in HTML+CSS+JS
  -->
@@ -30,7 +30,7 @@
 
 <script setup lang="ts">
 import { onMounted, onBeforeUnmount } from 'vue'
-import { isDarkMode } from '@/stores/states.ts'
+import { themeState } from '@/stores/states.ts'
 
 // 定义 utilityClock 函数
 const utilityClock = (container: HTMLElement) => {
