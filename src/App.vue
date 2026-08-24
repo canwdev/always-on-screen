@@ -47,6 +47,7 @@ const cycleTheme = () => {
     <RouterView />
     <div class="float-bar auto-hide-panel">
       <RouterLink class="link-item" to="/">🏠</RouterLink>
+      <a class="link-item" href="https://github.com/canwdev/always-on-screen" target="_blank">🔗</a>
 
       <button :title="`Theme: ${themeMode}`" @click="cycleTheme">{{ themeEmoji }}</button>
       <button :title="isActive ? 'Wake lock active' : 'Wake lock off'" @click="toggleWakeLock">
