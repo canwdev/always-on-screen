@@ -356,7 +356,7 @@ function ringPath(
 ) {
   const half = bw / 2
   g.beginPath()
-  roundedRectPath(g, x - half, y - half, w + bw, h + bw, r + half)
+  roundedRectPath(g, x - half, y - half, w + bw, h + bw, r)
   const iw = w - bw
   const ih = h - bw
   if (iw > 0 && ih > 0) {
@@ -408,7 +408,7 @@ function glowStroke(
 }
 
 function borderRect() {
-  const inset = thickness.value * 0.5 + 1
+  const inset = thickness.value * 0.5
   if (square.value) {
     const side = Math.max(0, minWH.value - inset * 2)
     return {
@@ -517,7 +517,7 @@ onMounted(() => {
   <div class="marquee-lab">
     <canvas ref="canvas"></canvas>
 
-    <div class="panel">
+    <div class="panel auto-hide-panel">
       <div class="panel-head">
         <div class="panel-title">Marquee Lab</div>
         <div class="mode-pill">{{ modePill }}</div>

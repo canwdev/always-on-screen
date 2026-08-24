@@ -9,7 +9,6 @@ const { toggle: toggleFullscreen } = useFullscreen()
 
 const { isSupported, isActive, request, release } = useWakeLock()
 
-const floatBarHidden = ref(false)
 const mainWrapper = ref<HTMLElement | null>(null)
 
 onMounted(() => {
@@ -20,8 +19,7 @@ const toggleWakeLock = () => {
   else request('screen')
 }
 
-useCursorHider('.float-bar', ({ isShow }) => {
-  floatBarHidden.value = !isShow
+useCursorHider('.auto-hide-panel', ({ isShow }) => {
   if (mainWrapper.value) {
     mainWrapper.value.style.cursor = isShow ? '' : 'none'
   }
@@ -47,7 +45,7 @@ const cycleTheme = () => {
 <template>
   <div ref="mainWrapper" class="main-wrapper" :class="{ dark: themeState === 'dark' }">
     <RouterView />
-    <div class="float-bar" :class="{ hidden: floatBarHidden }">
+    <div class="float-bar auto-hide-panel">
       <RouterLink class="link-item" to="/">🏠</RouterLink>
 
       <button :title="`Theme: ${themeMode}`" @click="cycleTheme">{{ themeEmoji }}</button>
@@ -73,6 +71,15 @@ body {
 * {
   box-sizing: border-box;
 }
+.auto-hide-panel {
+  opacity: 1;
+  transition: opacity 0.3s;
+
+  &.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
 </style>
 
 <style lang="scss" scoped>
@@ -91,13 +98,6 @@ body {
   display: flex;
   gap: 16px;
   align-items: center;
-  opacity: 1;
-  transition: opacity 0.3s;
-
-  &.hidden {
-    opacity: 0;
-    pointer-events: none;
-  }
 
   a,
   button {
