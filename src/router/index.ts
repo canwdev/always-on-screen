@@ -20,10 +20,18 @@ export const appRoutes = [
   },
   {
     path: '/screen-test',
-    name: 'ColorfulScreen',
-    component: () => import('../components/ColorfulScreen.vue'),
+    name: 'ScreenTest',
+    component: () => import('../components/ScreenTest.vue'),
     meta: {
       title: 'Screen Test',
+    },
+  },
+  {
+    path: '/marquee-lab',
+    name: 'MarqueeLab',
+    component: () => import('../components/MarqueeLab.vue'),
+    meta: {
+      title: 'Marquee Lab',
     },
   },
 ]
@@ -38,6 +46,11 @@ const router = createRouter({
     },
     ...appRoutes,
   ],
+})
+
+router.afterEach((to) => {
+  const baseTitle = 'Always On Screen'
+  document.title = to.meta.title ? `${to.meta.title} - ${baseTitle}` : baseTitle
 })
 
 export default router

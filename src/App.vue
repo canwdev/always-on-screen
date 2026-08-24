@@ -111,6 +111,7 @@ body {
     text-decoration: none;
     padding: 0;
     line-height: 1;
+    text-shadow: 1px 1px 1px #fff;
 
     &:active,
     &:hover {
